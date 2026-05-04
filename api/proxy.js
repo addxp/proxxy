@@ -5,13 +5,14 @@ const app = express();
 
 const TARGET = "https://embedplayapi.top";
 
-// CORS — permite embed em qualquer origem
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.removeHeader("X-Frame-Options");
   res.removeHeader("Content-Security-Policy");
+  // Remove Accept-Encoding para forçar resposta sem compressão
+  delete req.headers["accept-encoding"];
   if (req.method === "OPTIONS") return res.sendStatus(200);
   next();
 });
@@ -22,9 +23,12 @@ app.use(
     target: TARGET,
     changeOrigin: true,
     selfHandleResponse: true,
-    decompress: true,
 
     on: {
+      proxyReq: (proxyReq) => {
+        // Remove encoding para receber HTML puro
+        proxyReq.removeHeader("accept-encoding");
+      },
       proxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
         const contentType = proxyRes.headers["content-type"] || "";
 
