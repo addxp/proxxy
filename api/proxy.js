@@ -24,11 +24,12 @@ app.use(
     changeOrigin: true,
     selfHandleResponse: true,
 
-    on: {
-      proxyReq: (proxyReq) => {
-        // Remove encoding para receber HTML puro
-        proxyReq.removeHeader("accept-encoding");
-      },
+ on: {
+  proxyReq: (proxyReq) => {
+    proxyReq.removeHeader("accept-encoding");
+    proxyReq.setHeader("referer", "https://movieon-addxpht.vercel.app");
+    proxyReq.setHeader("origin", "https://movieon-addxpht.vercel.app");
+  },
       proxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
         const contentType = proxyRes.headers["content-type"] || "";
 
