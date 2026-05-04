@@ -3,7 +3,7 @@ const { createProxyMiddleware, responseInterceptor } = require("http-proxy-middl
  
 const app = express();
  
-const TARGET = "https://www.embedplay.one";
+const TARGET = "https://embedplayapi.top";
  
 // CORS — permite embed em qualquer origem
 app.use((req, res, next) => {
