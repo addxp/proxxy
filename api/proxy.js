@@ -20,11 +20,16 @@ app.use((req, res, next) => {
 // Proxy reverso com interceptação da resposta HTML
 app.use(
   "/",
-  createProxyMiddleware({
-    target: TARGET,
-    changeOrigin: true,
-    selfHandleResponse: true, // necessário para interceptar e modificar
- 
+createProxyMiddleware({
+  target: TARGET,
+  changeOrigin: true,
+  selfHandleResponse: true,
+  decompress: true, // ← adiciona essa linha
+  
+  on: {
+    // ... resto do código
+  }
+})
     on: {
       proxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
         const contentType = proxyRes.headers["content-type"] || "";
