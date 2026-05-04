@@ -27,8 +27,8 @@ app.use(
  on: {
   proxyReq: (proxyReq) => {
     proxyReq.removeHeader("accept-encoding");
-    proxyReq.setHeader("referer", "https://movieon-addxpht.vercel.app");
-    proxyReq.setHeader("origin", "https://movieon-addxpht.vercel.app");
+proxyReq.setHeader("referer", "https://embedplayapi.top");
+proxyReq.setHeader("origin", "https://embedplayapi.top");
   },
       proxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
         const contentType = proxyRes.headers["content-type"] || "";
